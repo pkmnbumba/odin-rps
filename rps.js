@@ -10,38 +10,63 @@ function getComputerChoice() {
 }
 
 function playRound(playerSelection, computerSelection) {
+  const pScore = document.querySelector('#pScore');
+  const cScore = document.querySelector('#cScore');
+  let message;
+  
   if (computerSelection === playerSelection) {
-    console.log("Tie Game!");
-    return 0;
+    message = "Tie Game!";
   }
   else if(
     (playerSelection === "Rock" && computerSelection === "Paper") ||
     (playerSelection === "Paper" && computerSelection === "Scissors") ||
     (playerSelection === "Scissors" && computerSelection === "Rock")) {
-    console.log(`You lose! ${computerSelection} beats ${playerSelection}`);
-    return -1;
+    cScore.innerHTML = parseInt(cScore.innerHTML) + 1;
+    message = `You lose! ${computerSelection} beats ${playerSelection}.`;
   }
   else {
-    console.log(`You win! ${playerSelection} beats ${computerSelection}`);
-    return 1;
+    pScore.innerHTML = parseInt(pScore.innerHTML) + 1;
+    message = `You win! ${playerSelection} beats ${computerSelection}.`;
+  }
+  
+  // Update match history
+  const round = document.createElement('div');
+  const history = document.querySelector('#history');
+  
+  round.classList.add('round');
+  round.textContent = message;
+  history.appendChild(round);
+  
+  // End game at 5 points
+  if(cScore.innerHTML === '5' || pScore.innerHTML === '5') {
+    endGame();
   }
 }
 
-function game() {
-  let score = 0;
-  for(let i = 0; i < 5; i++) {
-    let playerSelection = camelCase(prompt("Pick Rock, Paper, or Scissors."));
-    let computerSelection = getComputerChoice();
-    console.log(`You picked ${playerSelection}`);
-    console.log(`Computer picked ${computerSelection}`);
-    score += playRound(playerSelection, computerSelection);
-    console.log(`Current score is ${score}. Round ${i + 1} out of 5.`);
-  }
+function endGame() {
+  const scores = document.querySelector('h2');
+  const buttons = document.querySelectorAll('button');
+  
+  // Show winner
+  const winner = pScore.innerHTML === '5' ? 'You' : 'Computer';
+  scores.textContent = `Game over. ${winner === 'You' ? 'You are the winner' : 'The computer wins'}!`;
+  
+  buttons.forEach((button) => {
+    button.remove();
+  });
 }
-
 
 function camelCase(string) {
   return string.toLowerCase().replace(/^./,string.charAt(0).toUpperCase());
 }
 
-game();
+// Add event listeners to all buttons
+const buttons = document.querySelectorAll('button');
+const pScore = document.querySelector('#pScore');
+const cScore = document.querySelector('#cScore');
+
+buttons.forEach((button) => {
+  button.addEventListener('click', () => {
+    playRound(camelCase(button.id), getComputerChoice());
+  });
+});
