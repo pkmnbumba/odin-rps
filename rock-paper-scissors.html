@@ -7,25 +7,29 @@
 </head>
 
 <body>
-  <h1>Pick Rock, Paper, or Scissors.</h1>
-  <h2 class="scores">Current score
-    <div>
-      Player: <span id="pScore">0</span>
+  <h1>Pick Rock, Paper, or Scissors</h1>
+  <div class="game-container">
+    <div class="container">
+      <h2 class="scores">Current score
+        <div>
+          Player: <span id="pScore">0</span>
+        </div>
+        <div>
+          Computer: <span id="cScore">0</span>
+        </div>
+      </h2>
+
+      <div class="buttons">
+        <button id="rock">Rock</button>
+        <button id="paper">Paper</button>
+        <button id="scissors">Scissors</button>
+      </div>
     </div>
-    <div>
-      Computer: <span id="cScore">0</span>
+
+    <div id="history">
+      <h3>Game History</h3>
     </div>
-  </h2>
-  
-    
-  <div class="buttons">
-    <button id="rock">Rock</button>
-    <button id="paper">Paper</button>
-    <button id="scissors">Scissors</button>
   </div>
-    
-  <h3>Game History</h3>
-  <div id="history"></div>
   
    <script src="rps.js"></script>
 </body>
